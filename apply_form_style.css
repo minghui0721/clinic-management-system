@@ -1,0 +1,182 @@
+body {
+	font-family: 'Montserrat', sans-serif;
+	margin-top: 100px;
+	background-color: #f8f4fc;
+}
+
+.page-title{
+    text-align: center;
+    text-decoration: underline;
+    color: #0b3052;
+}
+
+.form-container{
+    width: 1000px;
+    height: 1000px;
+	position: relative;
+    background-image: linear-gradient(#d8f4ff,white);
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-left: 250px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 40%);
+}
+
+.name-box,
+.ic-number-and-gender-box{
+    clear: both;
+    width: 100%;
+}
+
+.first-name-box{
+    padding-top: 50px;
+    padding-left: 125px;
+    float: left;
+    margin-bottom: 40px;
+}
+
+.first-name-box input{
+    display: block;
+	width: 300px;
+	padding: 8px;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.last-name-box{
+    padding-top: 50px;
+    padding-right: 125px;
+    float: right;
+}
+
+.last-name-box input{
+    display: block;
+	width: 300px;
+	padding: 8px;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.ic-number-box{
+    padding-left: 125px;
+    float: left;
+    margin-bottom: 40px;
+}
+
+.ic-number-box input{
+    display: block;
+	width: 300px;
+	padding: 8px;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.gender-box{
+    padding-right: 230px;
+    float: right;
+}
+
+.gender-box input,
+.gender-box p{
+	font-size: 20px;
+    margin-left: 70px;
+}
+
+.contact-number-and-work-experience-box,
+.email-box,
+.address-box,
+.job-name-and-job-type-box{
+    clear: both;
+    width: 100%;
+    padding-left: 125px;
+    margin-bottom: 50px;
+}
+
+.contact-number-box{
+    float: left;
+    margin-bottom: 50px;
+}
+
+.contact-number-box input{
+    display: block;
+	width: 300px;
+	padding: 8px;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.work-experience-box{
+    padding-right: 245px;
+    float: right;
+}
+
+.work-experience-box input{
+    display: block;
+	width: 300px;
+	padding: 8px;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.job-name-box{
+    float: left;
+    margin-bottom: 50px;
+}
+
+.job-name-box select{
+    display: block;
+	width: 300px;
+	padding: 8px;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.job-type-box{
+    padding-right: 245px;
+    float: right;
+}
+
+.job-type-box select{
+    display: block;
+	width: 300px;
+	padding: 8px;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.email-box input{
+    display: block;
+	width: 500px;
+	padding: 8px;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.address-box textarea{
+    display: block;
+	width: 736px;
+	padding: 8px;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.apply-button input{
+    position: relative;
+    background-color: #d83535;
+	color: white;
+	font-size: 25px;
+	padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+    left: 430px;
+    top: 20px;
+}
+
+.apply-button input:hover{
+    background-color: #a72929;
+}
