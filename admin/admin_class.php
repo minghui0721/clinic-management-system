@@ -131,7 +131,7 @@ Class Action {
 	
 	function save_category(){
 		extract($_POST);
-		$data = " name = '$name' ";
+		$data = " name = '$name', description = '$description' ";
 		if(!empty($_FILES['img']['tmp_name'])){
 			$fname = strtotime(date("Y-m-d H:i"))."_".$_FILES['img']['name'];
 			$move = move_uploaded_file($_FILES['img']['tmp_name'], '../assets/img/'.$fname);
@@ -140,13 +140,15 @@ Class Action {
 			}
 		}
 		if(empty($id)){
-			$save = $this->db->query("INSERT INTO medical_specialty set ".$data);
+			$save = $this->db->query("INSERT INTO medical_specialty SET ".$data);
 		}else{
-			$save = $this->db->query("UPDATE medical_specialty set ".$data." where id=".$id);
+			$save = $this->db->query("UPDATE medical_specialty SET ".$data." WHERE id=".$id);
 		}
 		if($save)
 			return 1;
 	}
+
+	
 	function delete_category(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM medical_specialty where id = ".$id);

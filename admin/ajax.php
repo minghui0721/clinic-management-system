@@ -46,7 +46,7 @@ if($action == "save_settings"){
 }
 if($action == "save_category"){
 	$save = $crud->save_category();
-	if($save)
+	if($save)	
 		echo $save;
 }
 if($action == "delete_category"){
