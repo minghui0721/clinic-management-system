@@ -9,6 +9,7 @@
 				<?php if($_SESSION['login_type'] == 1): ?>
 				<a href="index.php?page=users" class="nav-item nav-users"><span class='icon-field'><i class="fa fa-users"></i></span> Users</a>
 				<a href="index.php?page=site_settings" class="nav-item nav-site_settings"><span class='icon-field'><i class="fa fa-cog"></i></span> Site Settings</a>
+				<a href="index.php?page=report" class="nav-item nav-site_settings"><span class='icon-field'><i class="fa fa-cog"></i></span> Report Generation</a>
 			<?php endif; ?>
 		</div>
 
