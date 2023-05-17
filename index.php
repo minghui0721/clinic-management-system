@@ -80,6 +80,7 @@
                         <!-- Add dropdown menu items here -->
                         <a class="dropdown-item" href="index.php?page=edit_profile">Profile</a>
                         <a class="dropdown-item" href="index.php?page=manage_appointment">Manage Apppointment</a>
+                        <a class="dropdown-item" href="index.php?page=manage_payment">Manage Payment</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="admin/ajax.php?action=logout2">Logout <i class="fa fa-power-off"></i></a>
                       </div>

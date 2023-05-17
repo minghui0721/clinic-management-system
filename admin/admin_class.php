@@ -247,11 +247,6 @@ Class Action {
     $time = date('H:i', strtotime($time)) . ":00";
     $sched = date('H:i', strtotime($time));
 
-    // Validate type of services field
-    if (empty($service_type)) {
-        return json_encode(array('status' => 2, "msg" => "Please select a type of service."));
-        exit;
-    }
 
     $doc_sched_check = $this->db->query("SELECT * FROM doctors_schedule WHERE doctor_id = $doctor_id AND day = '$day' AND ('$time' BETWEEN time_from AND time_to)");
     if ($doc_sched_check->num_rows <= 0) {
@@ -267,7 +262,6 @@ Class Action {
     }
 
     $data .= ", schedule = '$schedule' ";
-    $data .= ", services = '$service_type' "; // Update the field to "services"
 
     if (isset($status)) {
         $data .= ", status = '$status' ";
@@ -281,6 +275,7 @@ Class Action {
         return json_encode(array('status' => 1));
     }
 }
+
 
 
 
