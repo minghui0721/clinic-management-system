@@ -37,6 +37,10 @@
 		  background-repeat: no-repeat;
 		  background-size: cover;
 		}
+
+      body{
+        overflow-x:hidden;
+      }
     </style>
 
     

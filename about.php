@@ -5,15 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        .about-container {
-            width: 600px;
-            margin: 0 auto;
-            font-family: Arial, sans-serif;
-        }
 
         h2 {
             text-align: center;
             color: #333;
+        }
+
+        .container_setting{
+            margin-top:0 auto;
+            margin-top:-90px;
+            height:750px;
+            padding: 20px;
         }
 
         .about-item {
@@ -28,9 +30,34 @@
             margin-left: 5px;
         }
 
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        
+
+    }
+
+    th, td {
+        text-align: center;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+
+
     </style>
 </head>
 <body>
+
+
     <!-- Masthead-->
     <header class="masthead">
             <div class="container h-100">
@@ -43,8 +70,44 @@
             </div>
     </header>
 
+
+    <table>
+        <tr>
+            <th>Day</th>
+            <th>Opening Hours</th>
+        </tr>
+        <tr>
+            <td>Monday</td>
+            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+        </tr>
+        <tr>
+            <td>Tuesday</td>
+            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+        </tr>
+        <tr>
+            <td>Wednesday</td>
+            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+        </tr>
+        <tr>
+            <td>Thursday</td>
+            <td>9:30 AM - 5:30 PM</td>
+        </tr>
+        <tr>
+            <td>Friday</td>
+            <td>Close</td>
+        </tr>
+        <tr>
+            <td>Saturday</td>
+            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+        </tr>
+        <tr>
+            <td>Sunday</td>
+            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+        </tr>
+    </table>
+
     <section class="page-section">
-        <div class="container">
+        <div class="container_setting">
         <?php echo html_entity_decode($_SESSION['setting_about_content']) ?>        
         </div>
     </section>

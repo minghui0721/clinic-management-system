@@ -22,6 +22,14 @@ if ($result && mysqli_num_rows($result) > 0) {
   $createdTime = "";
   $receiptID = "";
 }
+
+$service_query = "SELECT services FROM appointment_list WHERE id = '$appointmentID'";
+$service_result = mysqli_query($conn, $service_query);
+if ($service_result && mysqli_num_rows($service_result) > 0) {
+  $service_row = mysqli_fetch_assoc($service_result);
+  $services = $service_row['services'];
+}
+
 ?>
 
 
@@ -100,6 +108,7 @@ if ($result && mysqli_num_rows($result) > 0) {
       text-align: center;
     }
   </style>
+
 </head>
 <body>
   <h1>Receipt</h1>
@@ -121,19 +130,19 @@ if ($result && mysqli_num_rows($result) > 0) {
           <th>Amount</th>
         </tr>
         <tr>
-          <td>Service 1</td>
-          <td>$50.00</td>
+          <td>Doctor Consultation</td>
+          <td>RM15.00</td>
         </tr>
         <tr>
-          <td>Service 2</td>
-          <td>$30.00</td>
+          <td><?php echo $services ?></td>
+          <td>RM60.00</td>
         </tr>
         <!-- Add more rows for additional services or items -->
       </table>
     </div>
 
     <div class="receipt-total">
-      <p>Total: $80.00</p>
+      <p>Total: RM75.00</p>
     </div>
 
     <div class="receipt-footer">

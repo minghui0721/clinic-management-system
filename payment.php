@@ -25,6 +25,8 @@
     } else {
         echo "Appointment ID not provided.";
     }
+
+    $totalAmount = 75.00;
 ?>
 
 <!DOCTYPE html>
@@ -109,6 +111,10 @@
 
         <h2><i>Payment Form</i></h2>
         <form method="POST" action="process_payment.php">
+
+        <p>Total Amount: RM<?php echo number_format($totalAmount, 2); ?></p> <!-- Display the total amount -->
+            <input type="hidden" name="total_amount" value="<?php echo $totalAmount; ?>">
+
             <input type="hidden" name="appointment_id" value="<?php echo $id; ?>">
             <div class="payment_details">
                 <label for="staff_option">Serve by which employee:</label>
