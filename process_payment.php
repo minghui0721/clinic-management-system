@@ -1,6 +1,9 @@
 <?php
+include('admin/db_connect.php');
+
+
 if (isset($_POST['submit'])) {
-    include('admin/db_connect.php');
+
 
     // Get the form data
     $appointmentId = $_POST['appointment_id'];
@@ -8,11 +11,11 @@ if (isset($_POST['submit'])) {
     $employeeName = $_POST['staff_option'];
 
     // Insert the payment details into the database
-    $insertQuery = "INSERT INTO payment (appointment_id, payment_type, employee_name) VALUES ('$appointmentId', '$paymentOption', '$employeeName')";
+    $insertQuery = "INSERT INTO `payment` (`appointment_id`, `payment_option`, `employee_name`) VALUES ('$appointmentId', '$paymentOption', '$employeeName')";
     $insertResult = mysqli_query($conn, $insertQuery);
 
     if ($insertResult) {
-        header("Location: index.php");
+        header("Location: index.php?page=manage_payment");
         $responseMessage = "Payment submitted successfully.";
         exit();
         // You can assign a success message or redirect the user to another page here
@@ -24,3 +27,4 @@ if (isset($_POST['submit'])) {
     echo "<div>$responseMessage</div>";
 }
 ?>
+

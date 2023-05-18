@@ -58,7 +58,9 @@
 							<?php endif ?>
 						</td>
 						<td class="text-center">
-							<button class="btn btn-primary btn-sm update_app" type="button" data-id="<?php echo $row['id'] ?>">Update</button>
+						<a href="index.php?page=update_appointment&id=<?php echo $row['id']; ?>">
+<button class="btn btn-primary btn-sm update_app" type="button" data-id="<?php echo $row['id'] ?>">Update</button></a>
+							
 							<button class="btn btn-danger btn-sm delete_app" type="button" data-id="<?php echo $row['id'] ?>">Delete</button>
 						</td>
 					</tr>

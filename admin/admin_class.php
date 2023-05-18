@@ -247,6 +247,14 @@ Class Action {
     $time = date('H:i', strtotime($time)) . ":00";
     $sched = date('H:i', strtotime($time));
 
+    // Check if it's a new appointment or update
+    $services = isset($_GET['id']) && !empty($_GET['id']) ? $_GET['services'] : $service_type;
+
+    // Validate type of services field
+    if (empty($services)) {
+        return json_encode(array('status' => 2, "msg" => "Please select a type of service."));
+        exit;
+    }
 
     $doc_sched_check = $this->db->query("SELECT * FROM doctors_schedule WHERE doctor_id = $doctor_id AND day = '$day' AND ('$time' BETWEEN time_from AND time_to)");
     if ($doc_sched_check->num_rows <= 0) {
@@ -255,26 +263,25 @@ Class Action {
     }
 
     $data = " doctor_id = '$doctor_id' ";
-    if (!isset($patient_id)) {
-        $data .= ", patient_id = '" . $_SESSION['login_id'] . "' ";
-    } else {
-        $data .= ", patient_id = '$patient_id' ";
-    }
-
+    $data .= isset($patient_id) ? ", patient_id = '$patient_id' " : ", patient_id = '" . $_SESSION['login_id'] . "' ";
     $data .= ", schedule = '$schedule' ";
+    $data .= ", services = '$services' ";
 
     if (isset($status)) {
         $data .= ", status = '$status' ";
     }
+
     if (isset($id) && !empty($id)) {
         $save = $this->db->query("UPDATE appointment_list SET " . $data . " WHERE id = " . $id);
     } else {
         $save = $this->db->query("INSERT INTO appointment_list SET " . $data);
     }
+
     if ($save) {
         return json_encode(array('status' => 1));
     }
 }
+
 
 
 
