@@ -11,8 +11,18 @@
 			<input type="password" name="password" required="" class="form-control">
 			<small><a href="javascript:void(0)" id="new_account">Create New Account</a></small>
 		</div>
+
 		<button class="button btn btn-info btn-sm" name="btnLogin">Login</button>
 	</form>
+</div>
+
+
+<div id="reset_email" style="display: none;">
+			<div class="form-group">
+				<label for="" class="control-label">Email</label>
+				<input type="email" name="reset_email" required="" class="form-control">
+				<button id="confirmReset" value="Confirm" type="submit">Confirm</button>
+			</div>
 </div>
 
 <style>
@@ -22,9 +32,16 @@
 </style>
 
 <script>
-	$('#new_account').click(function(){
-		uni_modal("Create an Account",'signup.php?redirect=index.php?page=checkout')
-	})
+	var loginAttempts = 0;
+	$('#new_account').click(function(event){
+		if (loginAttempts >= 3) {
+			event.preventDefault();
+			$('#reset_email').show();
+		} else {
+			uni_modal("Create an Account",'signup.php?redirect=index.php?page=checkout');
+		}
+	});
+
 	$('#login-frm').submit(function(e){
 		e.preventDefault();
 		$('#login-frm button[type="submit"]').attr('disabled', true).html('Logging in...');
@@ -39,7 +56,8 @@
 				$('#login-frm button[type="submit"]').removeAttr('disabled').html('Login');
 			},
 			success: function(resp) {
-				if(resp == 1) {
+				if (resp == 1) {
+					// Successful login
 					var redirect = '<?php echo isset($_GET['redirect']) ? $_GET['redirect'] : 'index.php?page=home' ?>';
 					var patientID = '<?php echo isset($_SESSION['patient_id']) ? $_SESSION['patient_id'] : '' ?>';
 					var email = encodeURIComponent($('#login-frm input[name="email"]').val());
@@ -59,10 +77,45 @@
 
 					location.href = url;
 				} else {
-					$('#login-frm').prepend('<div class="alert alert-danger">Email or password is incorrect.</div>')
+					// Failed login attempt
+					loginAttempts++;
+					if (loginAttempts >= 3) {
+						$('#new_account').text('Reset Password via Email');
+					}
+					$('#login-frm').prepend('<div class="alert alert-danger">Email or password is incorrect.</div>');
 					$('#login-frm button[type="submit"]').removeAttr('disabled').html('Login');
 				}
 			}
 		});
 	});
+
+	$('#confirmReset').click(function(e) {
+    e.preventDefault();
+    var resetEmail = $('input[name="reset_email"]').val();
+
+    // Perform any necessary validation on the resetEmail value
+
+    // Make an AJAX request to trigger the "reset.php" logic
+    $.ajax({
+        url: 'reset.php',
+        method: 'POST',
+        data: { email: resetEmail },
+        success: function(response) {
+            // Handle the response from "reset.php" if needed
+            if (response === 'success') {
+                $('#reset_email').html('<p>Please check your email to reset the password.</p>');
+            } else {
+                $('#reset_email').html('<p>Something went wrong. Please try again later.</p>');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log(xhr);
+            console.log(status);
+            console.log(error);
+        }
+    });
+});
+
+
+
 </script>
