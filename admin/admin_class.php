@@ -155,11 +155,14 @@ Class Action {
 		if($delete)
 			return 1;
 	}
+
+
 	function save_doctor(){
 		extract($_POST);
 		$data = " name = '$name' ";
+
 		$data .= ", name_pref = '$name_pref' ";
-		$data .= ", clinic_address = '$clinic_address' ";
+		$data .= ", clinic_address = '$address' ";
 		$data .= ", contact = '$contact' ";
 		$data .= ", email = '$email' ";
 		if(!empty($_FILES['img']['tmp_name'])){
@@ -176,41 +179,43 @@ Class Action {
 		}else{
 			$save = $this->db->query("UPDATE doctors_list set ".$data." where id=".$id);
 		}
+		
 		if($save){
-			$data = " username = '$email' ";
-			if(!empty($password))
-			$data .= ", password = '".$password."' ";
-			$data .= ", name = 'DR.".$name.', '.$name_pref."' ";
-			$data .= ", contact = '$contact' ";
-			$data .= ", address = '$clinic_address' ";
-			$data .= ", type = 2";
-			if(empty($id)){
-				$chk = $this->db->query("SELECT * FROM users where username = '$email ")->num_rows;
-				if($chk > 0){
-					return 2;
-					exit;
-				}
-					$data .= ", doctor_id = '$did'";
+			$data = "doctor_id = '$did'";
+			$data .= ", name = 'DR.$name, $name_pref'";
+			$data .= ", address = '$address'";
+			$data .= ", contact = '$contact'";
+			$data .= ", username = '$email'";
 
-					$save = $this->db->query("INSERT INTO users set ".$data);
-			}else{
-				$chk = $this->db->query("SELECT * FROM users where username = '$email' and doctor_id != ".$id)->num_rows;
-				if($chk > 0){
-					return 2;
-					exit;
-				}
-					$data .= ", doctor_id = '$id'";
-				$chk2 = $this->db->query("SELECT * FROM users where doctor_id = ".$id)->num_rows;
-					if($chk2 > 0)
-						$save = $this->db->query("UPDATE users set ".$data." where doctor_id = ".$id);
-					else
-						$save = $this->db->query("INSERT INTO users set ".$data);
-					
-
+			if (!empty($password)) {
+				$data .= ", password = '" . $password ."' ";
 			}
-			return 1;
+			$data .= ", type = 2";
+	
+			if(empty($did)){
+				$chk = $this->db->query("SELECT * FROM users where username = '$email'")->num_rows;
+				if($chk > 0){
+					return 2; // Username already exists
+					exit;
+				}
+				$save = $this->db->query("INSERT INTO users set ".$data);
+			} else if (!empty($did)) {
+				$chk = $this->db->query("SELECT * FROM users where username = '$email'")->num_rows;
+				if($chk > 0){
+					return 2; // Username already exists
+					exit;
+				} else{
+					$save = $this->db->query("INSERT INTO users set ".$data);
+					return 1;
+				}
+			}
+			return 1; // Success
+		} else {
+			return 0; // Error saving doctor
 		}
 	}
+	
+
 	function delete_doctor(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM doctors_list where id = ".$id);
@@ -237,6 +242,83 @@ Class Action {
 				return 1;
 			}
 	}
+
+
+
+	function save_staff()
+{
+    extract($_POST);
+    $data = " name = '$name' ";
+    $data .= ", contact_number = '$contact' ";
+    $data .= ", email = '$email' ";
+    $data .= ", salary = '$salary' ";
+
+    // Image upload
+    $img_path = '';
+    if (!empty($_FILES['img']['tmp_name'])) {
+        $fname = strtotime(date("Y-m-d H:i")) . "_" . $_FILES['img']['name'];
+        $move = move_uploaded_file($_FILES['img']['tmp_name'], '../assets/img/' . $fname);
+        if ($move) {
+            $data .= ", img_path = '$fname' ";
+        }
+    }
+
+    if (empty($staff_id)) {
+        $save = $this->db->query("INSERT INTO staff_list SET " . $data);
+        $staff_id = $this->db->insert_id;
+    } else {
+        $save = $this->db->query("UPDATE staff_list SET " . $data . " WHERE staff_id = " . $staff_id);
+    }
+
+    if ($save) {
+		$user_data = " doctor_id = 0 ";
+		$user_data .= ", name = '$name' ";
+		$user_data .= ", address = '$address' ";
+		$user_data .= ", contact = '$contact' ";
+		$user_data .= ", username = '$email' ";
+	
+		if (!empty($password)) {
+			$user_data .= ", password = '" . $password . "' ";
+		}
+	
+		$user_data .= ", type = 4 ";
+	
+		if (empty($staff_id)) {
+			$chk = $this->db->query("SELECT * FROM users WHERE username = '$email'")->num_rows;
+			if ($chk > 0) {
+				return 2; // Email already exists
+				exit;
+			}
+			$save_user = $this->db->query("INSERT INTO users SET " . $user_data);
+		} else if (!empty($staff_id)) { // Changed to else if condition
+			$check_existing_user = $this->db->query("SELECT * FROM users WHERE username = '$email'");
+			if ($check_existing_user->num_rows > 0) {
+				return 2; // Email already exists
+				exit;
+			} else {
+				$save_user = $this->db->query("INSERT INTO users SET " . $user_data); // Moved here
+				return 1;
+			}
+		}
+	}
+	
+	return 0; // Failed
+}	
+
+
+	function delete_staff() {
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM staff_list WHERE staff_id = " . $staff_id);
+		if($delete){
+			return 1;
+		} else{
+			return 0;
+		}
+	}	
+	
+
+
+
 
 	function set_appointment()
 {

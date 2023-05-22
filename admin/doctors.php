@@ -35,8 +35,8 @@
 								</select>
 							</div>
 							<div class="form-group">
-								<label class="control-label">Clinic Address</label>
-								<textarea name="clinic_address" id="" cols="30" rows="2" class="form-control" required=""></textarea>
+								<label class="control-label">Address</label>
+								<textarea name="address" id="" cols="30" rows="2" class="form-control" required=""></textarea>
 							</div>
 							<div class="form-group">
 								<label for="" class="control-label">Contact</label>
@@ -48,7 +48,7 @@
 							</div>
 							<div class="form-group">
 								<label for="" class="control-label">Password</label>
-								<input type="password" class="form-control" name="password" >
+								<input type="password" class="form-control" name="password" required>
 							</div>
 							<div class="form-group">
 								<label for="" class="control-label">Image</label>
@@ -168,10 +168,20 @@
 				else if(resp==2){
 					$('#msg').html('<div class="alert alert-danger">Email already exist.</div>')
 					end_load()
+
+				}
+				else if(resp==0){
+					$('#msg').html('<div class="alert alert-danger">Error saving doctor.</div>')
+					end_load()
+					
+				} else{
+					alert('hi');
 				}
 			}
 		})
 	})
+
+
 	function displayImg(input,_this) {
 	    if (input.files && input.files[0]) {
 	        var reader = new FileReader();

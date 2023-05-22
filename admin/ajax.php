@@ -64,6 +64,18 @@ if($action == "delete_doctor"){
 	if($save)
 		echo $save;
 }
+
+if($action == "save_staff"){
+	$save = $crud->save_staff();
+	if($save)
+		echo $save;
+}
+
+if($action == "delete_staff"){
+	$save = $crud->delete_staff();
+	if($save)
+		echo $save;
+}
 if($action == "save_schedule"){
 	$save = $crud->save_schedule();
 	if($save)

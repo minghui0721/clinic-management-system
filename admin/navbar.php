@@ -4,6 +4,7 @@
 
 				<a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-home"></i></span> Home</a>
 				<a href="index.php?page=appointments" class="nav-item nav-appointments"><span class='icon-field'><i class="fa fa-calendar"></i></span> Appointments</a>
+				<a href="index.php?page=staffs" class="nav-item nav-doctor"><span class='icon-field'><i class="fa fa-user-md"></i></span> Staffs</a>
 				<a href="index.php?page=doctors" class="nav-item nav-doctors"><span class='icon-field'><i class="fa fa-user-md"></i></span> Doctors</a>
 				<a href="index.php?page=categories" class="nav-item nav-categories"><span class='icon-field'><i class="fa fa-book-medical"></i></span> Medical Specialties</a>			
 				<?php if($_SESSION['login_type'] == 1): ?>
@@ -18,6 +19,14 @@
 	$('.nav-<?php echo isset($_GET['page']) ? $_GET['page'] : '' ?>').addClass('active')
 </script>
 <?php if($_SESSION['login_type'] == 2): ?>
+	<style>
+		.nav-sales ,.nav-users,.nav-doctors,.nav-categories{
+			display: none!important;
+		}
+	</style>
+<?php endif ?>
+
+<?php if($_SESSION['login_type'] == 4): ?>
 	<style>
 		.nav-sales ,.nav-users,.nav-doctors,.nav-categories{
 			display: none!important;
