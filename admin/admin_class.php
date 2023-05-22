@@ -249,6 +249,7 @@ Class Action {
 {
     extract($_POST);
     $data = " name = '$name' ";
+    $data .= ", address = '$address' ";
     $data .= ", contact_number = '$contact' ";
     $data .= ", email = '$email' ";
     $data .= ", salary = '$salary' ";

@@ -5,7 +5,7 @@ require_once 'db_connect.php';
 require_once 'tcpdf/tcpdf.php';
 
 // Retrieve doctor records
-$sql = "SELECT id, name, contact, email FROM doctors_list";
+$sql = "SELECT id, name, contact, email, clinic_address FROM doctors_list";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
@@ -44,34 +44,44 @@ if (mysqli_num_rows($result) > 0) {
     $pdf->setCellMargins(0, 0, 0, 0);
 
     // Set maximum width for each column
-    $columnWidths = [10, 30, 40, 60];
+    $columnWidths = [10, 30, 40, 40, 60];
 
-    // Output the column headers
+    // Calculate table width
+    $tableWidth = array_sum($columnWidths);
+
+    // Calculate horizontal offset to center the table
+    $horizontalOffset = ($pdf->getPageWidth() - $tableWidth) / 2;
+
+    // Output the column headers with horizontal offset
+    $pdf->SetX($horizontalOffset);
     $pdf->Cell($columnWidths[0], 10, 'ID', 1, 0, 'C');
     $pdf->Cell($columnWidths[1], 10, 'Name', 1, 0, 'C');
     $pdf->Cell($columnWidths[2], 10, 'Contact', 1, 0, 'C');
-    $pdf->Cell($columnWidths[3], 10, 'Email', 1, 1, 'C');
+    $pdf->Cell($columnWidths[3], 10, 'Email', 1, 0, 'C');
+    $pdf->Cell($columnWidths[4], 10, 'Clinic Address', 1, 1, 'C');
 
-    // Output the records
+    // Output the records with horizontal offset
     while ($row = mysqli_fetch_assoc($result)) {
         // Check if adding a new record will cause an overflow
         if ($pdf->GetY() + 10 > $pdf->getPageHeight() - $pdf->getMargins()['bottom']) {
             $pdf->AddPage(); // Add a new page if there is not enough space
         }
 
-        // Output the record
-        for ($i = 0; $i < count($columnWidths); $i++) {
-            $pdf->Cell($columnWidths[$i], 10, $row[array_keys($row)[$i]], 1, 0, 'C');
+        // Output the record with horizontal offset
+        $pdf->SetX($horizontalOffset);
+        $pdf->Cell($columnWidths[0], 10, $row['id'], 1, 0, 'C');
+        $pdf->Cell($columnWidths[1], 10, $row['name'], 1, 0, 'C');
+        $pdf->Cell($columnWidths[2], 10, $row['contact'], 1, 0, 'C');
+        $pdf->Cell($columnWidths[3], 10, $row['email'], 1, 0, 'C');
+        $pdf->Cell($columnWidths[4], 10, $row['clinic_address'], 1, 1, 'C');
         }
-        $pdf->Ln(); // Move to the next line
+
+        // Close and output the PDF
+        $pdf->Output('doctor_records.pdf', 'D');
+    } else {
+        ob_end_clean(); // Clear the output buffer
+        echo 'No doctor records found.';
     }
-
-    // Close and output the PDF
-    $pdf->Output('doctor_records.pdf', 'D');
-} else {
-    ob_end_clean(); // Clear the output buffer
-    echo 'No doctor records found.';
-}
-
-mysqli_close($conn);
+            
 ?>
+
