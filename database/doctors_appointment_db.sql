@@ -185,6 +185,17 @@ INSERT INTO `users` (`id`, `doctor_id`, `name`, `address`, `contact`, `username`
 (10, 3, 'DR.Claire Blake, M.D.', 'Sample Only', '+5465 555 623', 'cblake@sample.com', 'blake123', 2);
 
 --
+-- Table structure for table `users`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `user_id` int(30) NOT NULL,
+  `token` varchar(32) NOT NULL,
+  `expiry_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+--
 -- Indexes for dumped tables
 --
 

@@ -89,11 +89,10 @@
 		});
 	});
 
-	$('#confirmReset').click(function(e) {
+// JavaScript code to handle the AJAX request and display the response
+$('#confirmReset').click(function(e) {
     e.preventDefault();
     var resetEmail = $('input[name="reset_email"]').val();
-
-    // Perform any necessary validation on the resetEmail value
 
     // Make an AJAX request to trigger the "reset.php" logic
     $.ajax({
@@ -102,11 +101,15 @@
         data: { email: resetEmail },
         success: function(response) {
             // Handle the response from "reset.php" if needed
-            if (response === 'success') {
+            if (response === '1') {
                 $('#reset_email').html('<p>Please check your email to reset the password.</p>');
-            } else {
+            } else if (response === '2') {
                 $('#reset_email').html('<p>Something went wrong. Please try again later.</p>');
-            }
+			} else if (response === '3') {
+                $('#reset_email').html('<p>Email does not exist. Please register.</p>');
+            } else {
+				console.log(response);
+			}
         },
         error: function(xhr, status, error) {
             console.log(xhr);
@@ -115,7 +118,5 @@
         }
     });
 });
-
-
 
 </script>
