@@ -78,19 +78,19 @@
         </tr>
         <tr>
             <td>Monday</td>
-            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+            <td>10:00 AM - 7:00 PM</td>
         </tr>
         <tr>
             <td>Tuesday</td>
-            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+            <td>10:00 AM - 7:00 PM</td>
         </tr>
         <tr>
             <td>Wednesday</td>
-            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+            <td>10:00 AM - 7:00 PM</td>
         </tr>
         <tr>
             <td>Thursday</td>
-            <td>9:30 AM - 5:30 PM</td>
+            <td>10:00 AM - 7:00 PM</td>
         </tr>
         <tr>
             <td>Friday</td>
@@ -98,11 +98,11 @@
         </tr>
         <tr>
             <td>Saturday</td>
-            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+            <td>10:00 AM - 7:00 PM</td>
         </tr>
         <tr>
             <td>Sunday</td>
-            <td>9:30 AM - 1:00 PM<br>2:00 PM - 9:00 PM</td>
+            <td>10:00 AM - 7:00 PM</td>
         </tr>
     </table>
 

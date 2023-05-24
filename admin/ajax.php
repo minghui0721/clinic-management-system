@@ -71,6 +71,7 @@ if($action == "save_staff"){
 		echo $save;
 }
 
+
 if($action == "delete_staff"){
 	$save = $crud->delete_staff();
 	if($save)
@@ -81,6 +82,13 @@ if($action == "save_schedule"){
 	if($save)
 		echo $save;
 }
+
+if($action == "delete_schedule"){
+	$save = $crud->delete_schedule();
+	if($save)
+		echo $save;
+}
+
 if($action == "set_appointment"){
 	$save = $crud->set_appointment();
 	if($save)
@@ -101,7 +109,5 @@ if($action == "delete_inv"){
 	if($save)
 		echo $save;
 }
-
-
 
 

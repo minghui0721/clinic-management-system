@@ -223,27 +223,87 @@ Class Action {
 			return 1;
 	}
 
-	function save_schedule(){
-		extract($_POST);
-		foreach($days as $k => $val){
-			$data = " doctor_id = '$doctor_id' ";
-			$data .= ", day = '$days[$k]' ";
-			$data .= ", time_from = '$time_from[$k]' ";
-			$data .= ", time_to = '$time_to[$k]' ";
-			if(isset($check[$k])){
-				if($check[$k]>0)
-				$save[] = $this->db->query("UPDATE doctors_schedule set ".$data." where id =".$check[$k]);
-			else
-				$save[] = $this->db->query("INSERT INTO doctors_schedule set ".$data);
-			}
-		}
-
-			if(isset($save)){
-				return 1;
-			}
-	}
 
 
+	function save_schedule()
+{
+    extract($_POST);
+    $save = array(); // Initialize the $save array
+    foreach ($days as $k => $val) {
+        $data = " doctor_id = '$doctor_id' ";
+        $data .= ", day = '$days[$k]' ";
+        $data .= ", time_from = '$time_from[$k]' ";
+        $data .= ", time_to = '$time_to[$k]' ";
+
+        if (isset($check[$k])) {
+            if ($check[$k] > 0) {
+                $save[] = $this->db->query("UPDATE doctors_schedule SET " . $data . " WHERE id =" . $check[$k]);
+            } else {
+                $save[] = $this->db->query("INSERT INTO doctors_schedule SET " . $data);
+            }
+        } else {
+            // If checkbox is not set, delete the corresponding schedule
+            $this->db->query("DELETE FROM doctors_schedule WHERE doctor_id = '$doctor_id' AND day = '$days[$k]'");
+        }
+    }
+    if (!empty($save)) {
+        return 1;
+    }
+}
+
+function delete_schedule()
+{
+    extract($_POST);
+
+    $doctor_id = $_POST['doctor_id'];
+
+    // Retrieve all schedule IDs for the given doctor from the database
+    $query = "SELECT id FROM doctors_schedule WHERE doctor_id = $doctor_id";
+    $result = $this->db->query($query);
+
+    $db_schedule_ids = array();
+    while ($row = $result->fetch_assoc()) {
+        $db_schedule_ids[] = $row['id'];
+    }
+
+    // Store checked and unchecked checkbox values in respective arrays
+    $check = array();
+    if (isset($checked_ids) && is_array($checked_ids)) {
+        foreach ($checked_ids as $checked_id) {
+            $check[] = $checked_id;
+        }
+    }
+
+    $unchecked = array();
+    if (isset($unchecked_ids) && is_array($unchecked_ids)) {
+        foreach ($unchecked_ids as $unchecked_id) {
+            $unchecked[] = $unchecked_id;
+        }
+    }
+
+    // Compare database schedule IDs with checked checkboxes
+    $delete_ids = array_diff($db_schedule_ids, $check);
+
+    if (!empty($delete_ids)) {
+        $delete_query = "DELETE FROM doctors_schedule WHERE id IN (" . implode(',', $delete_ids) . ")";
+        $delete_result = $this->db->query($delete_query);
+        if ($delete_result) {
+            return 1; // Deletion successful
+        }
+    }
+
+    // Delete unchecked records
+    if (!empty($unchecked)) {
+        $delete_unchecked_query = "DELETE FROM doctors_schedule WHERE id IN (" . implode(',', $unchecked) . ")";
+        $delete_unchecked_result = $this->db->query($delete_unchecked_query);
+        if ($delete_unchecked_result) {
+            return 1; // Deletion successful
+        }
+    }
+}
+
+
+	
 
 	function save_staff()
 {
@@ -305,6 +365,7 @@ Class Action {
 	
 	return 0; // Failed
 }	
+
 
 
 	function delete_staff() {

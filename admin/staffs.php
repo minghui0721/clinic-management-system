@@ -1,5 +1,51 @@
 <?php include('db_connect.php');?>
 
+<script>
+function updateStaff() {
+			var form = document.getElementById('edit-form');
+			var staff_id = form.querySelector('#edit-staff-id').value;
+			var name = form.querySelector('#edit-name').value;
+			var address = form.querySelector('#edit-address').value;
+			var contact = form.querySelector('#edit-contact').value;
+			var email = form.querySelector('#edit-email').value;
+			var salary = form.querySelector('#edit-salary').value;
+			var img_path = ''; // Default image path
+
+			if (form.querySelector('#edit-img')) {
+				img_path = form.querySelector('#edit-img').value; // Get the current image path if it exists
+			}
+
+			// Create the SQL query to update the staff member
+			var query = "UPDATE staff_list SET staff_id = '" + staff_id + "', name = '" + name + "', address = '" + address + "', contact_number = '" + contact + "', email = '" + email + "', salary = " + salary + ", img_path = '" + img_path + "' WHERE staff_id = " + staff_id;
+
+			// Create and send a POST request
+			var request = new XMLHttpRequest();
+			request.open('POST', 'update_staff.php', true);
+
+			// Handle the response
+			request.onload = function() {
+				if (request.status === 200) {
+					var resp = request.responseText;
+					if (resp == 1) {
+						alert("Data successfully updated");
+						location.reload();
+					} else {
+						alert("Failed to update data");
+					}
+				} else {
+					alert("Error occurred during the request");
+				}
+			};
+
+			// Send the query as form data
+			var formData = new FormData();
+			formData.append('query', query);
+			request.send(formData);
+		}
+</script>
+
+
+
 <div class="container-fluid">
 	
 	<div class="col-lg-12">
@@ -89,19 +135,18 @@
 										<img src="../assets/img/<?php echo $row['img_path'] ?>" alt="">
 									</td>
 									<td class="">
-                                        
-										 <p>ID: <b><?php echo $row['staff_id']?></b></p>
-										 <p><small>Email: <b><?php echo $row['name'] ?></b></small></p>
-										 <p><small>Email: <b><?php echo $row['email'] ?></b></small></p>
-										 <p><small>Contact: <b><?php echo $row['contact_number'] ?></b></small></p>
-										 <p><small>Salary: <b>RM<?php echo $row['salary'] ?></b></small></p>
-			
-
+										<p>ID: <b><?php echo $row['staff_id'] ?></b></p>
+										<p><small>Name: <b><?php echo $row['name'] ?></b></small></p>
+										<p><small>Email: <b><?php echo $row['email'] ?></b></small></p>
+										<p><small>Contact: <b><?php echo $row['contact_number'] ?></b></small></p>
+										<p><small>Salary: <b>RM<?php echo $row['salary'] ?></b></small></p>
+										<p><small>Address: <b><?php echo $row['address'] ?></b></small></p>
 									</td>
 									<td class="text-center">
-										<button class="btn btn-sm btn-primary edit-staff" type="button" data-id="<?php echo $row['staff_id'] ?>" data-name="<?php echo $row['name'] ?>" data-contact="<?php echo $row['contact_number'] ?>"  data-img_path="<?php echo $row['img_path'] ?>" data-email="<?php echo $row['email'] ?>">Edit</button>
+										<button class="btn btn-sm btn-primary edit-staff" type="button" data-id="<?php echo $row['staff_id'] ?>" data-name="<?php echo $row['name'] ?>" data-contact="<?php echo $row['contact_number'] ?>" data-img_path="<?php echo $row['img_path'] ?>" data-email="<?php echo $row['email'] ?>" data-salary="<?php echo $row['salary'] ?>" data-address="<?php echo $row['address'] ?>">Edit</button>
 										<button class="btn btn-sm btn-danger delete_staff" type="button" data-id="<?php echo $row['staff_id'] ?>">Delete</button>
 									</td>
+
 								</tr>
 								<?php endwhile; ?>
 							</tbody>
@@ -114,6 +159,64 @@
 	</div>	
 
 </div>
+
+<!-- Add the following HTML code before the closing </body> tag -->
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Staff Member</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="edit-form">
+          <div class="form-group">
+            <label for="edit-staff-id">Staff ID</label>
+            <input type="text" id="edit-staff-id" name="staff_id" class="form-control" readonly>
+          </div>
+          <div class="form-group">
+            <label for="edit-name">Name</label>
+            <textarea id="edit-name" name="name" class="form-control" rows="2" required=""></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-address">Address</label>
+            <textarea id="edit-address" name="address" class="form-control" rows="2" required=""></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-contact">Contact Number</label>
+            <textarea id="edit-contact" name="contact" class="form-control" rows="2" required=""></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-email">Email</label>
+            <input type="email" id="edit-email" name="email" class="form-control" required="">
+          </div>
+          <div class="form-group">
+            <label for="edit-salary">Salary</label>
+            <input type="number" id="edit-salary" name="salary" class="form-control" required="">
+          </div>
+          <div class="form-group">
+            <label for="edit-img">Image</label>
+            <input type="file" id="edit-img" name="img" class="form-control" onchange="displayImg(this,$(this))">
+          </div>
+          <div class="form-group">
+            <img src="" alt="" id="edit-cimg" style="max-width:100px; max-height:150px;">
+          </div>
+          <input type="hidden" id="edit-id" name="id">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="updateStaff()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <style>
 	
 	td{
@@ -137,7 +240,7 @@
 
 	$(document).ready(function() {
 		// Initialize DataTable
-		$('table').dataTable();
+		var table = $('table').DataTable();
 
 		// Form submission
 		$('#manage-doctor').submit(function(e){
@@ -179,21 +282,35 @@
 		}
 
 		// Edit staff member
-		$('.edit-staff').click(function(){
-			start_load();
-			var form = $('#manage-doctor');
-			form.get(0).reset();
-			form.find("[name='id']").val($(this).attr('data-id'));
-			form.find("[name='name']").val($(this).attr('data-name'));
-			form.find("[name='contact']").val($(this).attr('data-contact'));
-			form.find("[name='email']").val($(this).attr('data-email'));
-			form.find("[name='salary']").val($(this).attr('data-salary'));
-			form.find("#cimg").attr("src","../assets/img/"+$(this).attr('data-img_path'));
-			end_load();
-		});
+		$('table').on('click', '.edit-staff', function() {
+			var staff_id = $(this).attr('data-id');
+			var name = $(this).attr('data-name');
+			var address = $(this).attr('data-address');
+			var contact = $(this).attr('data-contact');
+			var email = $(this).attr('data-email');
+			var salary = $(this).attr('data-salary');
+			var img_path = $(this).attr('data-img_path');
+
+		// Set the values in the edit modal form fields
+			$('#edit-staff-id').val(staff_id);
+			$('#edit-name').val(name);
+			$('#edit-address').val(address);
+			$('#edit-contact').val(contact);
+			$('#edit-email').val(email);
+			$('#edit-salary').val(salary);
+			$('#edit-cimg').attr('src', '../assets/img/' + img_path);
+
+		// Show the edit modal
+		$('#editModal').modal('show');
+	});
+
+		
+	
+
+
 
 		// Delete staff member
-		$('.delete_staff').click(function(){
+		$('table').on('click', '.delete_staff', function() {
             var staffID = $(this).attr('data-id');
             var confirmDelete = confirm("Are you sure you want to delete this staff member?");
             if (confirmDelete) {
