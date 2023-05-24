@@ -50,7 +50,7 @@ require 'PHPMailer-master/src/SMTP.php';
                 $mail->Subject = 'Password Reset';
                 $mailContent = '<h1>Reset Password</h1>
                     <p>Click the following link to reset your password:</p>
-                    <p><a href="http://localhost/clinic-management-system/reset_password.php?token=' . $token . '">Reset Password</a></p>';
+                    <p><a href="http://localhost/WDT012023/clinic_management_system/reset_password.php?token=' . $token . '">Reset Password</a></p>';            
                 $mail->Body = $mailContent;
     
                 $mail->send();
