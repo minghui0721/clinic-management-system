@@ -44,7 +44,7 @@ require 'PHPMailer-master/src/SMTP.php';
     
                 // Recipients
                 $mail->setFrom('mywellcare12@gmail.com', 'Well Care');
-                $mail->addAddress('ganminghui0000@gmail.com'); // Recipient's email
+                $mail->addAddress($resetEmail); // Recipient's email
 
                 $mail->isHTML(true);
                 $mail->Subject = 'Password Reset';
