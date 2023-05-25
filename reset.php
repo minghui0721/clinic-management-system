@@ -34,13 +34,23 @@ require 'PHPMailer-master/src/SMTP.php';
             try {
                 // $mail->SMTPAutoTLS = false;
                 $mail->isSMTP();
+                
+                // Mailtrap sandbox
                 // Configure your SMTP settings
-                $mail->Host = 'sandbox.smtp.mailtrap.io';
+                // $mail->Host = 'sandbox.smtp.mailtrap.io';
+                // $mail->SMTPAuth = true;
+                // $mail->Port = 2525;
+                // $mail->Username = '4f03d301383242';
+                // $mail->Password = 'fa00ebce445d74';
+                // $mail->SMTPSecure = 'tls';
+
+                // Gmail SMTP (500 mails per day)
+                $mail->Host = 'smtp.gmail.com'; // Gmail's server
                 $mail->SMTPAuth = true;
-                $mail->Port = 2525;
-                $mail->Username = '4f03d301383242';
-                $mail->Password = 'fa00ebce445d74';
-                $mail->SMTPSecure = 'tls';
+                $mail->Port = 465; // Gmail's port
+                $mail->Username = 'yourowngmailhere@gmail.com'; // Developer's email
+                $mail->Password = 'yourdigitcodehere'; // Developer's 16 digit code
+                $mail->SMTPSecure = 'ssl';
     
                 // Recipients
                 $mail->setFrom('mywellcare12@gmail.com', 'Well Care');
@@ -58,6 +68,7 @@ require 'PHPMailer-master/src/SMTP.php';
             } catch (Exception $e) {
                 echo '2'; // Email could not be sent
             }
+            $mail->smtpClose();
         } else {
             echo '2'; // Database query or insert failed
         }
