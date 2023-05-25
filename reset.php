@@ -48,12 +48,12 @@ require 'PHPMailer-master/src/SMTP.php';
                 $mail->Host = 'smtp.gmail.com'; // Gmail's server
                 $mail->SMTPAuth = true;
                 $mail->Port = 465; // Gmail's port
-                $mail->Username = 'yourowngmailhere@gmail.com'; // Developer's email
-                $mail->Password = 'yourdigitcodehere'; // Developer's 16 digit code
+                $mail->Username = 'ganminghui0000@gmail.com'; // Developer's email
+                $mail->Password = 'qsiksxnbpbkuxuam'; // Developer's 16 digit code
                 $mail->SMTPSecure = 'ssl';
     
                 // Recipients
-                $mail->setFrom('mywellcare12@gmail.com', 'Well Care');
+                $mail->setFrom('mywellcare12@gmail.com', 'Well Care'); //sia
                 $mail->addAddress($resetEmail); // Recipient's email
 
                 $mail->isHTML(true);
@@ -66,6 +66,7 @@ require 'PHPMailer-master/src/SMTP.php';
                 $mail->send();
                 echo '1'; // Email sent successfully
             } catch (Exception $e) {
+                echo "<script>console.log('Debug Objects: " . $e. "' );</script>";
                 echo '2'; // Email could not be sent
             }
             $mail->smtpClose();
