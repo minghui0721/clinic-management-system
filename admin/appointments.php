@@ -30,7 +30,7 @@
 					</thead>
 					<?php 
 					$where = '';
-					if($_SESSION['login_type'] == 2)
+					if($_SESSION['login_type'] == 2 && $_SESSION['login_type'] == 3)
 						$where = " where doctor_id = ".$_SESSION['login_doctor_id'];
 					$qry = $conn->query("SELECT * FROM appointment_list ".$where." ORDER BY id DESC ");
 					while($row = $qry->fetch_assoc()):
