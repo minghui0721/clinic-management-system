@@ -48,8 +48,8 @@ require 'PHPMailer-master/src/SMTP.php';
                 $mail->Host = 'smtp.gmail.com'; // Gmail's server
                 $mail->SMTPAuth = true;
                 $mail->Port = 465; // Gmail's port
-                $mail->Username = 'yourowngmailhere@gmail.com'; // Developer's email
-                $mail->Password = 'yourdigitcodehere'; // Developer's 16 digit code
+                $mail->Username = 'ganminghui0000@gmail.com'; // Developer's email
+                $mail->Password = 'qsiksxnbpbkuxuam'; // Developer's 16 digit code
                 $mail->SMTPSecure = 'ssl';
     
                 // Recipients
