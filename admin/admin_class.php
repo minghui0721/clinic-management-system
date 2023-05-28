@@ -71,31 +71,73 @@ Class Action {
 			return 1;
 		}
 	}
-	function signup(){
-		extract($_POST);
-		$data = " name = '$name' ";
-		$data .= ", contact = '$contact' ";
-		$data .= ", address = '$address' ";
-		$data .= ", username = '$email' ";
-		$data .= ", password = '".md5($password)."' ";
-		$data .= ", type = 3";
-		$chk = $this->db->query("SELECT * FROM users where username = '$email' ")->num_rows;
-		if($chk > 0){
-			return 2;
-			exit;
-		}
-			$save = $this->db->query("INSERT INTO users set ".$data);
-		if($save){
-			$qry = $this->db->query("SELECT * FROM users where username = '".$email."' and password = '".md5($password)."' ");
-			if($qry->num_rows > 0){
-				foreach ($qry->fetch_array() as $key => $value) {
-					if($key != 'passwors' && !is_numeric($key))
-						$_SESSION['login_'.$key] = $value;
-				}
-			}
-			return 1;
-		}
-	}
+
+
+	function signup()
+{
+    extract($_POST);
+    $data = " name = '$name' ";
+    $data .= ", contact = '$contact' ";
+    $data .= ", address = '$address' ";
+    $data .= ", username = '$email' ";
+    $data .= ", password = '".md5($password)."' ";
+    $data .= ", type = 3";
+
+    $chk = $this->db->query("SELECT * FROM users where username = '$email' ")->num_rows;
+    if ($chk > 0) {
+        return 2;
+        exit;
+    }
+
+    // Insert user data into the "users" table
+    $save = $this->db->query("INSERT INTO users set ".$data);
+    if ($save) {
+        $qry = $this->db->query("SELECT * FROM users where username = '".$email."' and password = '".md5($password)."' ");
+        if ($qry->num_rows > 0) {
+            $user = $qry->fetch_assoc();
+
+            foreach ($user as $key => $value) {
+                if ($key != 'password' && !is_numeric($key)) {
+                    $_SESSION['login_'.$key] = $value;
+                }
+            }
+
+            // Insert user data into the "patient_list" table
+            $patient_data = " name = '$name' ";
+            $patient_data .= ", address = '$address' ";
+            $patient_data .= ", email = '$email' ";
+            $patient_data .= ", contact_no = '$contact' ";
+
+            $insert_patient = $this->db->query("INSERT INTO patient_list set ".$patient_data);
+            $user_id = $this->db->insert_id;
+            if (!$insert_patient) {
+                // Handle the error if the insertion fails
+                return 1;
+            }
+
+            // Insert the allergic information into the "allergic" table
+            if (!empty($allergic)) {
+                if ($allergic == "other" && !empty($other)) {
+                    $allergic_data = " patient_id = '$user_id' ";
+                    $allergic_data .= ", name = '$other' ";
+                } else {
+                    $allergic_data = " patient_id = '$user_id' ";
+                    $allergic_data .= ", name = '$allergic' ";
+                }
+
+                $insert_allergic = $this->db->query("INSERT INTO allergic set ".$allergic_data);
+                if (!$insert_allergic) {
+                    // Handle the error if the insertion fails
+                    return 1;
+                }
+            }
+
+            return 1;
+        }
+    }
+}
+
+
 
 	function save_settings(){
 		extract($_POST);

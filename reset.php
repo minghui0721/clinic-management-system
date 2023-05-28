@@ -53,7 +53,7 @@ require 'PHPMailer-master/src/SMTP.php';
                 $mail->SMTPSecure = 'ssl';
     
                 // Recipients
-                $mail->setFrom('mywellcare12@gmail.com', 'Well Care'); //sia
+                $mail->setFrom('mywellcare12@gmail.com', 'Well Care');
                 $mail->addAddress($resetEmail); // Recipient's email
 
                 $mail->isHTML(true);
@@ -66,7 +66,6 @@ require 'PHPMailer-master/src/SMTP.php';
                 $mail->send();
                 echo '1'; // Email sent successfully
             } catch (Exception $e) {
-                echo "<script>console.log('Debug Objects: " . $e. "' );</script>";
                 echo '2'; // Email could not be sent
             }
             $mail->smtpClose();
