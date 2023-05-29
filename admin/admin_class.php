@@ -448,9 +448,14 @@ function delete_schedule()
         exit;
     }
 
+	// Calculate the end time
+    $date_end = date('Y-m-d H:i:s', strtotime($schedule . '+30 minutes'));
+	
+
     $data = " doctor_id = '$doctor_id' ";
     $data .= isset($patient_id) ? ", patient_id = '$patient_id' " : ", patient_id = '" . $_SESSION['login_id'] . "' ";
     $data .= ", schedule = '$schedule' ";
+    $data .= ", date_end = '$date_end' ";
     $data .= ", services = '$services' ";
 
     if (isset($status)) {
