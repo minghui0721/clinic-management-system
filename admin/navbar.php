@@ -5,6 +5,7 @@
 				<a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-home"></i></span> Home</a>
 				<a href="index.php?page=appointments" class="nav-item nav-appointments"><span class='icon-field'><i class="fa fa-calendar"></i></span> Appointments</a>
 				<a href="index.php?page=patients" class="nav-item nav-patients"><span class='icon-field'><i class="fa fa-user-md"></i></span> Patients</a>
+				<a href="index.php?page=payments" class="nav-item nav-payments"><span class='icon-field'><i class="fa fa-user-md"></i></span> Payments</a>
 				<a href="index.php?page=staffs" class="nav-item nav-staffs"><span class='icon-field'><i class="fa fa-user-md"></i></span> Staffs</a>
 				<a href="index.php?page=doctors" class="nav-item nav-doctors"><span class='icon-field'><i class="fa fa-user-md"></i></span> Doctors</a>
 				<a href="index.php?page=categories" class="nav-item nav-categories"><span class='icon-field'><i class="fa fa-book-medical"></i></span> Medical Specialties</a>

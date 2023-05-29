@@ -74,10 +74,10 @@
 
 <script>
 	$('.update_app').click(function(){
-		uni_modal("Edit Appintment","set_appointment.php?id="+$(this).attr('data-id'),"mid-large")
+		uni_modal("Edit Apppintment","set_appointment.php?id="+$(this).attr('data-id'),"mid-large")
 	})
 	$('#new_appointment').click(function(){
-		uni_modal("Add Appintment","set_appointment.php","mid-large")
+		uni_modal("Add Appointment","set_appointment.php","mid-large")
 	})
 	$('.delete_app').click(function(){
 		_conf("Are you sure to delete this appointment?","delete_app",[$(this).attr('data-id')])
