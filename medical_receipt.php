@@ -26,11 +26,18 @@
 
     .option {
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
     }
 
     .option label {
       display: block;
       font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .option input{
+      margin-top: -5px;
     }
   </style>
 </head>
