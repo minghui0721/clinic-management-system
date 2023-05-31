@@ -22,7 +22,9 @@
 
 </nav>
 <script>
-	$('.nav-<?php echo isset($_GET['page']) ? $_GET['page'] : '' ?>').addClass('active')
+	$(document).ready(function() {
+        $('.nav-<?php echo isset($_GET['page']) ? $_GET['page'] : '' ?>').addClass('active');
+    });
 </script>
 <?php if($_SESSION['login_type'] == 2): ?>
 	<style>

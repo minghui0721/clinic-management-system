@@ -169,6 +169,49 @@ Class Action {
 			return 1;
 				}
 	}
+	
+	function save_career()
+{
+    include 'db_connect.php';
+
+    // Retrieve the career data from the POST request
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $type = $_POST['type'];
+	$career_id = isset($_POST['career_id']) ? $_POST['career_id'] : null;
+
+    // Add your validation and sanitization checks here if needed
+
+    if ($career_id) {
+        // Update operation
+        // Prepare the query to update the career data
+        $stmt = $conn->prepare("UPDATE career SET name = ?, description = ?, type = ? WHERE career_id = ?");
+        $stmt->bind_param("sssi", $name, $description, $type, $career_id);
+    } else {
+        // Insert operation
+        // Prepare the query to insert the career data
+        $stmt = $conn->prepare("INSERT INTO career (name, description, type) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $name, $description, $type);
+    }
+
+    if ($stmt->execute()) {
+        echo 1; // Return 1 to indicate success
+    } else {
+        echo "Error: " . $stmt->error; // Return an error message
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+
+	
+	
+function delete_career(){
+	extract($_POST);
+	$delete = $this->db->query("DELETE FROM career where career_id = ".$career_id);
+	if($delete)
+		return 1;
+}
 
 	
 	function save_category(){

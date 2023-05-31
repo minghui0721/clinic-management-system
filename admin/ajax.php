@@ -44,6 +44,11 @@ if($action == "save_settings"){
 	if($save)
 		echo $save;
 }
+if($action == "save_career"){
+	$save = $crud->save_career();
+	if($save)
+		echo $save;
+}
 if($action == "save_category"){
 	$save = $crud->save_category();
 	if($save)	
@@ -51,6 +56,11 @@ if($action == "save_category"){
 }
 if($action == "delete_category"){
 	$save = $crud->delete_category();
+	if($save)
+		echo $save;
+}
+if($action == "delete_career"){
+	$save = $crud->delete_career();
 	if($save)
 		echo $save;
 }
