@@ -10,6 +10,7 @@
 				<a href="index.php?page=doctors" class="nav-item nav-doctors"><span class='icon-field'><i class="fa fa-user-md"></i></span> Doctors</a>
 				<a href="index.php?page=categories" class="nav-item nav-categories"><span class='icon-field'><i class="fa fa-book-medical"></i></span> Medical Specialties</a>
 				<a href="index.php?page=application" class="nav-item nav-application"><span class='icon-field'><i class="fa fa-book-medical"></i></span> Career Application</a>
+				<a href="index.php?page=career" class="nav-item nav-career"><span class='icon-field'><i class="fa fa-book-medical"></i></span> Career Management</a>
 							
 
 				<?php if($_SESSION['login_type'] == 1): ?>

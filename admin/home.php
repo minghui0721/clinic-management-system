@@ -8,29 +8,40 @@ include 'db_connect.php';
 $appointments = array();
 
 // Execute the query to retrieve the appointments data
-$query = "SELECT patient_id, schedule, date_end FROM appointment_list";
+$query = "SELECT patient_id, schedule, date_end, status FROM appointment_list";
 $result = mysqli_query($conn, $query);
 
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $start = $row['schedule'];
         $end = $row['date_end'];
+        $status = $row['status'];
 
         // Format the start and end times using the desired format
         $startTime = date('h:i A', strtotime($start));
         $endTime = date('h:i A', strtotime($end));
 
+        $color = '';
+
+        // Set different colors based on the appointment status
+        if ($status == 0) {
+          $color = '#FF0000'; // Red color for pending status
+        } elseif ($status == 1) {
+            $color = '#00FF00'; // Green color for confirmed status
+        } elseif ($status == 3) {
+            $color = '#4adede'; // Blue color for done status
+        }
+
         $appointment = array(
             'title' => $row['patient_id'] . '<br>Start Time: ' . $startTime . '<br>End Time: ' . $endTime,
             'start' => $start,
             'end' => $end,
-            'color' => '#FF0000',
+            'color' => $color,
+            'status' => $status,
         );
         $appointments[] = $appointment;
     }
 }
-
-
 
 
 // Convert the array to JSON
@@ -66,6 +77,12 @@ mysqli_close($conn);
 				
 				</div>
 			</div>
+
+        <!-- Add the three buttons -->
+      <button id="filter-pending">Pending</button>
+      <button id="filter-confirmed">Confirmed</button>
+      <button id="filter-done">Done</button>
+      
 			<div id="calendar">
 
 			</div>
@@ -79,8 +96,10 @@ mysqli_close($conn);
 
 
 <script>
+ 
 $(document).ready(function() {
-  $('#calendar').fullCalendar({
+  var calendar; // Declare the calendar variable
+  calendar = $('#calendar').fullCalendar({
     header: {
       left: 'prev,next today',
       center: 'title',
@@ -95,28 +114,61 @@ $(document).ready(function() {
     },
     events: <?php echo $appointments_json; ?>,
     eventRender: function(event, element) {
-  // Check if the appointment details have already been added
-  if (element.find('.appointment-details').length === 0) {
-    // Extract the appointment details from the event title
-    var titleParts = event.title.split('<br>');
-    var patientID = titleParts[0];
-    var startTime = titleParts[1].substring(titleParts[1].indexOf(':') + 1).trim();
-    var endTime = titleParts[2].substring(titleParts[2].indexOf(':') + 1).trim();
+      // Check if the appointment details have already been added
+      if (element.find('.appointment-details').length === 0) {
+        // Extract the appointment details from the event title
+        var titleParts = event.title.split('<br>');
+        var patientID = titleParts[0];
+        var startTime = titleParts[1].substring(titleParts[1].indexOf(':') + 1).trim();
+        var endTime = titleParts[2].substring(titleParts[2].indexOf(':') + 1).trim();
+        var status = event.status;
 
-    // Create the HTML content for the appointment details
-    var html = '<div class="appointment-details">' +
-               '<div class="patient-id">Patient ID: ' + patientID + '</div>' +
-               '<div class="start-time">Start Time: ' + startTime + '</div>' +
-               '<div class="end-time">End Time: ' + endTime + '</div>' +
-               '</div>';
 
-	element.find('.fc-title').remove(); // Remove event title
-    element.find('.fc-content').append(html);
-  }
-}
+        // Create the HTML content for the appointment details
+        var html = '<div class="appointment-details">' +
+          '<div class="patient-id">Patient ID: ' + patientID + '</div>' +
+          '<div class="start-time">Start Time: ' + startTime + '</div>' +
+          '<div class="end-time">End Time: ' + endTime + '</div>' +
+          '<div class="status">Status: ' + status + '</div>' +
+          '</div>';
 
+
+        element.find('.fc-title').remove(); // Remove event title
+        element.find('.fc-content').append(html);
+
+         // Add custom class to the event element based on status
+        element.addClass('status-' + status);
+      }
+    }
   });
-});
 
+  // Button click event handlers
+   // Button click event handlers
+   $('#filter-pending').click(function() {
+    // Hide all appointments
+    calendar.find('.fc-event').hide();
+
+    // Show only the appointments with status "0"
+    calendar.find('.status-0').show();
+  });
+
+
+  $('#filter-confirmed').click(function() {
+    // Hide all appointments
+    calendar.find('.fc-event').hide();
+
+    // Show only the appointments with status "1"
+    calendar.find('.status-1').show();
+  });
+
+  $('#filter-done').click(function() {
+    // Hide all appointments
+    calendar.find('.fc-event').hide();
+
+    // Show only the appointments with status "3"
+    calendar.find('.status-3').show();
+  });
+  
+});
 
 </script>
