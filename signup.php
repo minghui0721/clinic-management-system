@@ -10,11 +10,11 @@ session_start();
 	<form action="" id="signup-frm">
 		<div class="form-group">
 			<label for="" class="control-label">Name</label>
-			<input type="text" name="name" required="" class="form-control">
+			<input type="text" name="name" required="" placeholder="Only alphabets" class="form-control" onkeydown="return /[a-zA-Z]/i.test(event.key)" />
 		</div>
 		<div class="form-group">
 			<label for="" class="control-label">Contact</label>
-			<input type="text" name="contact" required="" class="form-control">
+			<input type="tel" name="contact" required="" class="form-control" placeholder="xxx-xxxxxxxx" pattern="[0-9]{3}-[0-9]{8}">
 		</div>
 		<div class="form-group">
 			<label for="" class="control-label">Address</label>

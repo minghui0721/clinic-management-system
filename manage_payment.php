@@ -2,9 +2,10 @@
 include('admin/db_connect.php');
 
 // Retrieve appointment records with status = 3
-$query = "SELECT al.id, al.schedule, al.services, al.status, r.remark
+$query = "SELECT al.id, al.schedule, al.services, al.status, r1.remark AS remark_staff, r2.remark AS remark_doctor
           FROM appointment_list al
-          LEFT JOIN remark r ON al.id = r.appointment_id
+          LEFT JOIN remark r1 ON al.id = r1.appointment_id AND r1.type = 'staff'
+          LEFT JOIN remark r2 ON al.id = r2.appointment_id AND r2.type = 'doctor'
           WHERE al.status = 3";
 $result = mysqli_query($conn, $query);
 
@@ -16,7 +17,8 @@ if (mysqli_num_rows($result) > 0) {
     echo "<th>Schedule</th>";
     echo "<th>Services</th>";
     echo "<th>Payment Status</th>";
-    echo "<th>Remark</th>";
+    echo "<th>Remark (Doctor)</th>";
+    echo "<th>Remark (Staff)</th>";
     echo "</tr>";
 
     while ($row = mysqli_fetch_assoc($result)) {
@@ -24,7 +26,8 @@ if (mysqli_num_rows($result) > 0) {
         $schedule = $row['schedule'];
         $services = $row['services'];
         $status = $row['status'];
-        $remark = $row['remark'];
+        $remarkDoctor = $row['remark_doctor'];
+        $remarkStaff = $row['remark_staff'];
     
         // Check if payment exists for the appointment ID
         $paymentQuery = "SELECT payment_id FROM payment WHERE appointment_id = '$id'";
@@ -42,16 +45,16 @@ if (mysqli_num_rows($result) > 0) {
             echo "<a href='index.php?page=medical_receipt&appointment_id=$id'>$paymentStatus</a>";
         }
         echo "</td>";
-        echo "<td>$remark</td>";
+        echo "<td>$remarkDoctor</td>";
+        echo "<td>$remarkStaff</td>";
         echo "</tr>";
     }
-    
-    
 
     echo "</table>";
 } else {
     echo "No appointment records found.";
 }
+
 ?>
 
 <head>
