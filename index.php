@@ -41,6 +41,14 @@
       body{
         overflow-x:hidden;
       }
+
+      .logo {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px; /* Adjust the margin as needed */
+        width: 50px;
+    }
+
     </style>
 
     
@@ -52,7 +60,10 @@
       </div>
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="./"><?php echo $_SESSION['setting_name'] ?></a>
+                <a class="navbar-brand js-scroll-trigger" href="./">
+                  <img src="logo.jpg" alt="Poliklinik Koh Logo" class="logo">
+                  Poliklinik Koh
+              </a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0">
