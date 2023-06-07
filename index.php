@@ -8,6 +8,7 @@
 
 
 
+
 	$query = $conn->query("SELECT * FROM system_settings limit 1")->fetch_array();
 	foreach ($query as $key => $value) {
 		if(!is_numeric($key))
@@ -94,6 +95,7 @@
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <!-- Add dropdown menu items here -->
                         <a class="dropdown-item" href="index.php?page=edit_profile">Profile</a>
+                        <a class="dropdown-item" href="index.php?page=calendar">Calendar</a>
                         <a class="dropdown-item" href="index.php?page=manage_appointment">Manage Apppointment</a>
                         <a class="dropdown-item" href="index.php?page=manage_payment">Manage Payment</a>
                         <div class="dropdown-divider"></div>

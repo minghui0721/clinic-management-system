@@ -4,6 +4,9 @@
 
 				<a href="index.php?page=home" class="nav-item nav-home"><span class='icon-field'><i class="fa fa-home"></i></span> Home</a>
 				<a href="index.php?page=appointments" class="nav-item nav-appointments"><span class='icon-field'><i class="fa fa-calendar"></i></span> Appointments</a>
+				<a href="index.php?page=remarks_doctor" class="nav-item nav-remarks"><span class='icon-field'><i class="fa fa-calendar"></i></span> Remarks (doctors)</a>
+				<a href="index.php?page=remarks_request" class="nav-item nav-remarks"><span class='icon-field'><i class="fa fa-calendar"></i></span> Remarks (requests)</a>
+				<a href="index.php?page=remarks_staff" class="nav-item nav-remarks"><span class='icon-field'><i class="fa fa-calendar"></i></span> Remarks (staffs)</a>
 				<a href="index.php?page=patients" class="nav-item nav-patients"><span class='icon-field'><i class="fa fa-user-md"></i></span> Patients</a>
 				<a href="index.php?page=payments" class="nav-item nav-payments"><span class='icon-field'><i class="fa fa-user-md"></i></span> Payments</a>
 				<a href="index.php?page=staffs" class="nav-item nav-staffs"><span class='icon-field'><i class="fa fa-user-md"></i></span> Staffs</a>

@@ -491,9 +491,15 @@ function delete_schedule()
         exit;
     }
 
-	// Calculate the end time
+    // Check if the appointment slot is available
+    $slot_check = $this->db->query("SELECT * FROM appointment_list WHERE schedule = '$schedule'");
+    if ($slot_check->num_rows > 0) {
+        return json_encode(array('status' => 2, "msg" => "This slot is not available."));
+        exit;
+    }
+
+    // Calculate the end time
     $date_end = date('Y-m-d H:i:s', strtotime($schedule . '+30 minutes'));
-	
 
     $data = " doctor_id = '$doctor_id' ";
     $data .= isset($patient_id) ? ", patient_id = '$patient_id' " : ", patient_id = '" . $_SESSION['login_id'] . "' ";

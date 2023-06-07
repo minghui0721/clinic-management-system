@@ -37,14 +37,8 @@ if ($options_result) {
                 // Format the appointment slot time
                 $slot_time = date('H:i', $current_time);
 
-                // Check if the appointment slot time is available in the "appointment_list" table
-                $check_query = "SELECT * FROM appointment_list WHERE TIME_FORMAT(schedule, '%H:%i') = '$slot_time'";
-                $check_result = mysqli_query($conn, $check_query);
-
-                // If the slot time does not exist in the "appointment_list" table, display it to the user
-                if (mysqli_num_rows($check_result) == 0) {
-                    $appointment_slots[] = $slot_time;
-                }
+    
+                $appointment_slots[] = $slot_time;
     
                 // Move to the next appointment slot
                 $current_time += $duration;

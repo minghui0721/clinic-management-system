@@ -33,7 +33,7 @@
     .option label {
       display: block;
       font-weight: bold;
-      margin-right: 10px;
+      margin-left: 10px;
     }
 
     .option input{
@@ -46,13 +46,13 @@
 
   <div class="options-section">
     <div class="option">
-      <label for="medical-leave-option">Medical Leave</label>
       <input type="radio" id="medical-leave-option" name="receipt-option" value="medical-leave">
+      <label for="medical-leave-option">Medical Leave</label>
     </div>
 
     <div class="option">
-      <label for="receipt-option">Receipt</label>
       <input type="radio" id="receipt-option" name="receipt-option" value="receipt">
+      <label for="receipt-option">Receipt</label>
     </div>
   </div>
 

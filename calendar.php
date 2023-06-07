@@ -1,6 +1,9 @@
 <?php
 // Create a connection to the MySQL database
-include 'db_connect.php';
+include 'admin/db_connect.php';
+
+$id = $_SESSION['login_id'];
+
 
 
 
@@ -8,7 +11,7 @@ include 'db_connect.php';
 $appointments = array();
 
 // Execute the query to retrieve the appointments data
-$query = "SELECT patient_id, schedule, date_end, status FROM appointment_list";
+$query = "SELECT patient_id, schedule, date_end, status FROM appointment_list WHERE patient_id = '$id'";
 $result = mysqli_query($conn, $query);
 
 if (mysqli_num_rows($result) > 0) {
@@ -47,55 +50,39 @@ if (mysqli_num_rows($result) > 0) {
 // Convert the array to JSON
 $appointments_json = json_encode($appointments);
 
-// Close the database connection
-mysqli_close($conn);
+
 ?>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+    <style>
+        .calendar-container {
+            width: 400px; /* Adjust the width as per your requirement */
+            height: 400px; /* Adjust the height as per your requirement */
+            margin: 0 auto; /* Center the calendar horizontally */
+        }
 
-
-<div class="containe-fluid">
-
-	<div class="row">
+        body{
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
 		<div class="col-lg-12">
-			
+            <div id="calendar"></div>
 		</div>
 	</div>
-
-	<div class="row mt-3 ml-3 mr-3">
-			<div class="col-lg-12">
-			<div class="card">
-				<div class="card-body">
-				<?php echo "Welcome back ".($_SESSION['login_type'] == 3 ? "Dr. ".$_SESSION['login_name'].','.$_SESSION['login_name_pref'] : $_SESSION['login_name'])."!"  ?>
-									
-				</div>
-				<hr>
-				<div class="row">
-				
-				</div>
-			</div>
-
-        <!-- Add the three buttons -->
-      <button id="filter-pending">Pending</button>
-      <button id="filter-reschedule">Reschedule</button>
-      <button id="filter-confirmed">Confirmed</button>
-      <button id="filter-done">Done</button>
-      
-			<div id="calendar">
-
-			</div>
-
-			
-		</div>
-		</div>
-	</div>
-
-</div>
-
-
+</body>
+</html>
 <script>
  
 $(document).ready(function() {
@@ -141,41 +128,6 @@ $(document).ready(function() {
         element.addClass('status-' + status);
       }
     }
-  });
-
-  // Button click event handlers
-   // Button click event handlers
-   $('#filter-pending').click(function() {
-    // Hide all appointments
-    calendar.find('.fc-event').hide();
-
-    // Show only the appointments with status "0"
-    calendar.find('.status-0').show();
-  });
-
-   $('#filter-reschedule').click(function() {
-    // Hide all appointments
-    calendar.find('.fc-event').hide();
-
-    // Show only the appointments with status "0"
-    calendar.find('.status-2').show();
-  });
-
-
-  $('#filter-confirmed').click(function() {
-    // Hide all appointments
-    calendar.find('.fc-event').hide();
-
-    // Show only the appointments with status "1"
-    calendar.find('.status-1').show();
-  });
-
-  $('#filter-done').click(function() {
-    // Hide all appointments
-    calendar.find('.fc-event').hide();
-
-    // Show only the appointments with status "3"
-    calendar.find('.status-3').show();
   });
   
 });

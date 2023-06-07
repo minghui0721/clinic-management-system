@@ -141,6 +141,11 @@ if(isset($_GET['id'])){ // check if the 'id' parameter is passed in the URL
 </head>
 <body>
     
+
+
+
+
+
     
     <!-- Appointment Table -->
     <div class="container2">
